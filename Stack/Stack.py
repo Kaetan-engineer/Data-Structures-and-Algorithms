@@ -17,13 +17,14 @@ class Stack:
         return len(self) < 0
 
     def pop(self) -> Any:
-        return self.data.remove(len(self)-1)
+        return self.data.remove(len(self) - 1)
 
     def push(self, value: Any) -> None:
         self.data.append(value)
 
     def peek(self) -> Any:
-        return self.data[len(self)-1]
+        return self.data[len(self) - 1]
+
 
 S = Stack()
 values = [10, 20, 30, 40, 50]
