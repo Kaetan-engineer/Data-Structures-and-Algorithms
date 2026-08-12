@@ -55,54 +55,72 @@ class Heap(ABC, Generic[T]):
 
         return sorted(self._heap) == sorted(other_heap.heap)
 
+    @staticmethod
+    def _left_child(index: int) -> int:
+        return 2 * index + 1
+
+    @staticmethod
+    def _right_child(index: int) -> int:
+        return 2 * index + 2
+
+    @staticmethod
+    def _parent(index: int) -> int:
+        """ Returns the parent's index of a given index :param index: The index to find the parent of :returns int: The parent index of the given index """
+
+        return (index - 1) // 2
+
     @abstractmethod
     def _comes_before(self, first: T, second: T) -> bool:
         """Return True if first has higher priority than second."""
         pass
 
+    def _swap(self, parent: int, child: int) -> None:
+        self._heap[parent], self._heap[child] = self._heap[child], self._heap[parent]
+
     def _heapify_up(self, index: int) -> None:
+        """
+        Takes the value at the given index, and shifts it upwards the heap until teh value above is smaller or equal
+        :rtype: None
+        """
+
         while index > 0:
-            parent = (index - 1) // 2
 
-            if not self._comes_before(self._heap[index], self._heap[parent]):
+            parent = self._parent(index)
+
+            if self._comes_before(self._heap[index], self._heap[parent]):
+                self._swap(index, parent)
+                index = parent
+
+            else:
                 break
-
-            self._heap[index], self._heap[parent] = (
-                self._heap[parent],
-                self._heap[index],
-            )
-
-            index = parent
 
     def _heapify_down(self, index: int) -> None:
-        size = len(self._heap)
-
+        """
+        Takes the value at the given index, and shifts it downwards the heap until the node is smaller than or equal to its children
+        :rtype: None
+        """
         while True:
-            left = 2 * index + 1
-            right = 2 * index + 2
-            best = index
+            left = self._left_child(index)
 
-            if (
-                left < size
-                and self._comes_before(self._heap[left], self._heap[best])
-            ):
-                best = left
-
-            if (
-                right < size
-                and self._comes_before(self._heap[right], self._heap[best])
-            ):
-                best = right
-
-            if best == index:
+            if left >= len(self._heap):
                 break
 
-            self._heap[index], self._heap[best] = (
-                self._heap[best],
-                self._heap[index],
-            )
+            right = self._right_child(index)
 
-            index = best
+            if right >= len(self._heap):
+                smallest_child = left
+
+            else:
+                if self._comes_before(self._heap[left], self._heap[right]):
+                    smallest_child = left
+                else:
+                    smallest_child = right
+
+            if self._comes_before(self._heap[index], self._heap[smallest_child]):
+                break
+
+            self._swap(smallest_child, index)
+            index = smallest_child
 
     @property
     def heap(self) -> list[T]:
@@ -120,9 +138,10 @@ class Heap(ABC, Generic[T]):
             return self._heap.pop()
 
         root = self._heap[0]
-        self._heap[0] = self._heap.pop()
-        self._heapify_down(0)
+        self._heap[0] = self._heap[-1] # Old: self._heap[0] = self._heap.pop()
+        self._heap.pop()
 
+        self._heapify_down(0)
         return root
 
     def peek(self) -> T:

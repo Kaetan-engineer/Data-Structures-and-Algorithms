@@ -434,3 +434,67 @@ def test_repr_populated(heap_class: type[Heap[int]], expected: str):
     heap.heapify([20, 5, 30, 10])
 
     assert repr(heap) == expected
+
+
+@pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
+def test_eq_empty_heaps(heap_class: type[Heap[int]]):
+    heap1 = heap_class()
+    heap2 = heap_class()
+
+    assert heap1 == heap2
+
+
+
+@pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
+def test_eq_same_heaps(heap_class: type[Heap[int]]):
+    heap1 = heap_class()
+    heap2 = heap_class()
+
+    values = [20, 10, 30, 5, 15]
+
+    heap1.heapify(values)
+    heap2.heapify(values)
+
+    assert heap1 == heap2
+
+
+@pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
+def test_eq_same_values_different_structure(heap_class: type[Heap[int]]):
+    heap1 = heap_class()
+    heap2 = heap_class()
+
+    for value in [20, 10, 30, 5, 15]:
+        heap1.insert(value)
+
+    for value in [15, 5, 30, 10, 20]:
+        heap2.insert(value)
+
+    assert_valid_heap(heap1)
+    assert_valid_heap(heap2)
+
+    assert heap1 == heap2
+
+
+@pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
+def test_eq_different_values(heap_class: type[Heap[int]]):
+    heap1 = heap_class()
+    heap2 = heap_class()
+
+    heap1.heapify([10, 20, 30])
+    heap2.heapify([10, 20, 40])
+
+    assert heap1 != heap2
+
+
+@pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
+def test_eq_different_values(heap_class: type[Heap[int]]):
+    heap1 = heap_class()
+    heap2 = heap_class()
+
+    heap1.heapify([10, 20, 30])
+    heap2.heapify([10, 20, 40])
+
+    assert heap1 != heap2
+
+
+
