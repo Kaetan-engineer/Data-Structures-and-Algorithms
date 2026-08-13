@@ -444,7 +444,6 @@ def test_eq_empty_heaps(heap_class: type[Heap[int]]):
     assert heap1 == heap2
 
 
-
 @pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
 def test_eq_same_heaps(heap_class: type[Heap[int]]):
     heap1 = heap_class()
@@ -497,4 +496,68 @@ def test_eq_different_values(heap_class: type[Heap[int]]):
     assert heap1 != heap2
 
 
+def test_eq_min_heap_vs_max_heap():
+    min_heap = MinHeap()
+    max_heap = MaxHeap()
 
+    values = [10, 20, 30]
+
+    min_heap.heapify(values)
+    max_heap.heapify(values)
+
+    assert min_heap != max_heap
+
+
+@pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
+def test_eq_duplicates(heap_class: type[Heap[int]]):
+    heap1 = heap_class()
+    heap2 = heap_class()
+
+    heap1.heapify([10, 10, 20, 30])
+    heap2.heapify([30, 10, 20, 10])
+
+    assert heap1 == heap2
+
+
+@pytest.mark.parametrize("heap_class", [MinHeap, MaxHeap])
+def test_eq_different_duplicates(heap_class: type[Heap[int]]):
+    heap1 = heap_class()
+    heap2 = heap_class()
+
+    heap1.heapify([10, 10, 20])
+    heap2.heapify([10, 20, 20])
+
+    assert heap1 != heap2
+
+
+@pytest.mark.parametrize("other", [
+    [10, 20, 30],
+    (10, 20, 30),
+    None,
+    42,
+    "heap",
+])
+def test_eq_other_objects(other: object):
+    heap = MinHeap()
+    heap.heapify([10, 20, 30])
+
+    assert heap != other
+
+
+@pytest.mark.parametrize("heap_class, expected_results", [
+    (MinHeap, [[40, 30, 20, 10], 20, [20, 30]]),
+    (MaxHeap, [[10, 30, 20, 40], 20, [20, 30]])
+])
+def test_all_builtin_operations(heap_class: type[Heap[int]], expected_results: tuple[list[int], int, list[int]]):
+    heap = heap_class()
+
+    heap.heapify([10, 20, 30, 40])
+
+    assert sorted(list(heap)) == [10, 20, 30, 40]
+    assert tuple(sorted(heap)) == (10, 20, 30, 40)
+    assert list(reversed(heap)) == expected_results[0]
+    assert 20 in heap
+    assert heap[1] == expected_results[1]
+    assert heap[1:3] == expected_results[2]
+    assert len(heap) == 4
+    assert bool(heap)

@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Iterator
 from typing import Generic, TypeVar, overload
@@ -51,9 +50,7 @@ class Heap(ABC, Generic[T]):
         if type(self) is not type(other):
             return False
 
-        other_heap = other
-
-        return sorted(self._heap) == sorted(other_heap.heap)
+        return sorted(self.heap) == sorted(other.heap)
 
     @staticmethod
     def _left_child(index: int) -> int:
@@ -185,7 +182,6 @@ class Heap(ABC, Generic[T]):
 
     def clear(self) -> None:
         self._heap = []
-
 
 
 class MinHeap(Heap[T]):
