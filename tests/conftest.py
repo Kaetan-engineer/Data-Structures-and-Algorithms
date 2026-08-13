@@ -1,5 +1,4 @@
 from BinarySearchTree.BST import BinarySearchTree
-from Heaps.heap import MinHeap, MaxHeap
 import pytest
 
 
