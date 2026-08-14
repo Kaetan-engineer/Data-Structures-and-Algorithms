@@ -1,6 +1,6 @@
-from typing import Any, Generic, Iterator, overload
-from LinkedList.Linked_list import LinkedList
-from Heaps.heap import Heap
+from typing import Any, Iterator, overload
+from DataStructures.LinkedList.Linked_list import LinkedList
+from DataStructures.Heaps.heap import Heap
 from typing import Generic, TypeVar
 
 T = TypeVar("T")

@@ -1,5 +1,5 @@
 import pytest
-from HashTable.HashTable import HashTable
+from DataStructures.HashTable.HashTable import HashTable
 
 
 @pytest.mark.parametrize("capacity", [0, -1, -5, -100])

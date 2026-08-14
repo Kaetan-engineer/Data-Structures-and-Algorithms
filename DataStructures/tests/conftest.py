@@ -1,4 +1,5 @@
-from BinarySearchTree.BST import BinarySearchTree
+from DataStructures.BinarySearchTree.BST import BinarySearchTree
+from DataStructures.Trie.Trie import Trie
 import pytest
 
 
@@ -49,3 +50,9 @@ def populated_tree():
 )
 def test_contains(populated_tree, value, exists):
     assert (value in populated_tree) is exists
+
+
+
+@pytest.fixture
+def empty_trie():
+    return Trie()

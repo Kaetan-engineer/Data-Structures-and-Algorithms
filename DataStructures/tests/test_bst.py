@@ -1,4 +1,4 @@
-from BinarySearchTree.BST import BinarySearchTree
+from DataStructures.BinarySearchTree.BST import BinarySearchTree
 import pytest
 
 

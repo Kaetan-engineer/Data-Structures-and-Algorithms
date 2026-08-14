@@ -1,4 +1,4 @@
-from Heaps.heap import Heap, MinHeap, MaxHeap
+from DataStructures.Heaps.heap import Heap, MinHeap, MaxHeap
 from typing import Callable, Iterable
 import random
 import pytest

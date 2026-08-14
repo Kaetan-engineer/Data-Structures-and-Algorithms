@@ -1,5 +1,5 @@
-from Queue.Queue import PriorityQueue
-from Heaps.heap import MinHeap, MaxHeap, Heap
+from DataStructures.Queue.Queue import PriorityQueue
+from DataStructures.Heaps.heap import MinHeap, MaxHeap, Heap
 import pytest
 
 

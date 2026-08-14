@@ -1,5 +1,5 @@
 from typing import Any
-from Array.DynamicArray import DynamicArray
+from DataStructures.Array.DynamicArray import DynamicArray
 
 
 class Stack:

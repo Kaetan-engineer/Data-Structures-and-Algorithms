@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Generator
 from collections.abc import Iterator
-from Queue.Queue import Queue
+from DataStructures.Queue.Queue import Queue
 
 
 @dataclass
